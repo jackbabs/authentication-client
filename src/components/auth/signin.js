@@ -1,23 +1,41 @@
 import React, { Component } from 'react'
-import { reduxForm } from 'redux-form'
+import { Field, reduxForm } from 'redux-form'
+import { connect } from 'react-redux'
+import * as actions from '../../actions'
 
 class Signin extends Component {
+  renderField(field){
+    const className = "form-group"
+    return (
+      <div className={className}>
+        <label>{field.label}</label>
+        <input
+          className="form-control"
+          type="text"
+          {...field.input}
+        />
+      </div>
+    )
+  }
   handleFormSubmit({ email, password }){
-    console.log(email, password)
+    this.props.signinUser({ email, password }, () => {
+      this.props.history.push('/feature')
+    })
   }
   render(){
-    const { handleSubmit, fields: { email, password }} = this.props
-
+    const { handleSubmit } = this.props
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-        <fieldset className="form group">
-          <label>Email:</label>
-          <input className="form-control"/>
-        </fieldset>
-        <fieldset className="form group">
-          <label>Password:</label>
-          <input className="form-control"/>
-        </fieldset>
+        <Field
+          label="Email"
+          name="email"
+          component={this.renderField}
+        />
+        <Field
+          label="Password"
+          name="password"
+          component={this.renderField}
+        />
         <button action="submit" className="btn btn-primary">Sign in</button>
       </form>
     )
@@ -27,4 +45,6 @@ class Signin extends Component {
 export default reduxForm({
   form: 'signin',
   fields: ['email', 'password']
-})(Signin)
+})(
+  connect(null, actions)(Signin)
+)
