@@ -7,7 +7,7 @@ class Header extends Component {
   renderLinks(){
     if(this.props.authenticated){
       return <li className="nav-item">
-        <NavLink to="/" className="nav-link">Sign out</NavLink>
+        <NavLink to="/signout" className="nav-link">Sign out</NavLink>
       </li>
     } else {
       return [

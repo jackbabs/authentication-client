@@ -11,7 +11,7 @@ class Signin extends Component {
         <label>{field.label}</label>
         <input
           className="form-control"
-          type={field.label === "Password" ? "password" : "text"}
+          type={field.type}
           {...field.input}
         />
       </div>
@@ -39,11 +39,13 @@ class Signin extends Component {
         <Field
           label="Email"
           name="email"
+          type="text"
           component={this.renderField}
         />
         <Field
           label="Password"
           name="password"
+          type="password"
           component={this.renderField}
         />
         {this.renderAlert()}
@@ -54,7 +56,6 @@ class Signin extends Component {
 }
 
 function mapStateToProps(state){
-  console.log(state)
   return { errorMessage: state.auth.error }
 }
 
